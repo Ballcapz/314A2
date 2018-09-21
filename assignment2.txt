@@ -1,0 +1,50 @@
+%include "/usr/local/share/csc314/asm_io.inc"
+
+
+segment .data
+
+
+segment .bss
+
+
+segment .text
+	global  asm_main
+
+asm_main:
+	push	ebp
+	mov		ebp, esp
+	; ********** CODE STARTS HERE **********
+
+	call	read_int	
+	mov		ecx, eax	; ecx = A
+	call 	read_int
+	mov		ebx, eax	; ebx = B
+	call	read_int	;
+	mov		esi, eax	; esi = C	
+	
+	mov		eax, ebx	; eax = B, ebx is free
+	mov 	ebx, 16		; ebx = 16
+	imul	ebx			; edx:eax = eax * ebx
+	idiv	esi			; edx:eax / esi = eax,,, eax has the value ((B*16)/C)  ecx = A
+	mov 	ebx, ecx	; ebx = A, ecx = A
+	add 	ebx, 95		; ebx = A + 95
+	imul	ebx			; (A + 95) * ((B * 16) / C) = edx:eax
+	sub		eax, ecx	;							- A
+	add		eax, 20		;								+ 20
+	
+	call 	print_int
+	call	print_nl
+	
+
+
+
+	
+
+	; *********** CODE ENDS HERE ***********
+	mov		eax, 0
+	mov		esp, ebp
+	pop		ebp
+	ret
+
+
+
